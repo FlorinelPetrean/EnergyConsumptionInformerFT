@@ -26,6 +26,6 @@ deploy:
     - dpl --provider=heroku --app=ds2021frontend-eup --api-key=$HEROKU_API_KEY --skip_cleanup
   environment:
     name: staging
-    url: https://react-demo-ds2020.herokuapp.com/
+    url: https://ds2021frontend-eup.herokuapp.com/
   only:
     - production
