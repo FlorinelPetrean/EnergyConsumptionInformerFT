@@ -1,11 +1,15 @@
 import React from 'react'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import NavigationBar from './navigation-bar'
-import Home from './home/home';
-import PersonContainer from './person/person-container'
-
-import ErrorPage from './commons/errorhandling/error-page';
-import styles from './commons/styles/project-style.css';
+import {BrowserRouter , Switch} from 'react-router-dom'
+import DeviceList from './components/device/DeviceList';
+import UserForm from './components/user/UserForm';
+import UserList from './components/user/UserList';
+import PrivateRoute from './utils/PrivateRoute';
+import PublicRoute from './utils/PublicRoute';
+import LoginPage from './pages/LoginPage';
+import LogoutPage from './pages/LogoutPage';
+import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
+import Layout from './layout/Layout';
 
 class App extends React.Component {
 
@@ -13,36 +17,27 @@ class App extends React.Component {
     render() {
 
         return (
-            <div className={styles.back}>
-            <Router>
-                <div>
-                    <NavigationBar />
-                    <Switch>
+            <BrowserRouter>
+        <Switch>
+            <PublicRoute restricted={true} path="/login" exact component={LoginPage} />
+            <PublicRoute restricted={true }path="/register" exact component={UserForm}/>
+            <PrivateRoute path="/logout" exact component={LogoutPage} />
+            <Layout>
+              <PrivateRoute restricted={false} exact path="/" component={HomePage} />
 
-                        <Route
-                            exact
-                            path='/'
-                            render={() => <Home/>}
-                        />
+              {/* <PrivateRoute path="/devices/form"  exact component={DeviceForm}/> */}
+              <PrivateRoute path="/devices/list"  exact component={DeviceList}/>
+        
+              
 
-                        <Route
-                            exact
-                            path='/person'
-                            render={() => <PersonContainer/>}
-                        />
+              <PrivateRoute path="/users/form" exact component={UserForm}/>
+              <PrivateRoute path="/users/list" exact component={UserList}/>
+             
+              <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            </Layout>
 
-                        {/*Error*/}
-                        <Route
-                            exact
-                            path='/error'
-                            render={() => <ErrorPage/>}
-                        />
-
-                        <Route render={() =><ErrorPage/>} />
-                    </Switch>
-                </div>
-            </Router>
-            </div>
+        </Switch>
+    </BrowserRouter>
         )
     };
 }
