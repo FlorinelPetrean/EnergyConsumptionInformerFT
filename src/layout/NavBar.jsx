@@ -27,17 +27,17 @@ class NavBar extends Component {
 
             <li>
               <NavDropdown title="Devices" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/accounts/list">List</NavDropdown.Item>
-                <NavDropdown.Item href="/accounts/form">Create</NavDropdown.Item>
+                <NavDropdown.Item href="/devices/list">List</NavDropdown.Item>
+                <NavDropdown.Item href="/devices/form">Create</NavDropdown.Item>
               </NavDropdown>
             </li>
-{/* 
+
             <li>
-              <NavDropdown title="Payments" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/payments/list">List</NavDropdown.Item>
-                <NavDropdown.Item href="/payments/form">Create</NavDropdown.Item>
+              <NavDropdown title="Sensors" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/sensors/list">List</NavDropdown.Item>
+                <NavDropdown.Item href="/sensors/form">Create</NavDropdown.Item>
               </NavDropdown>
-            </li> */}
+            </li> 
 
             <li>
               {!isAuthenticated() && (<Link to='/login'>Login</Link>)}

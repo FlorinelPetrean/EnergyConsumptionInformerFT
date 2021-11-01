@@ -2,7 +2,7 @@ import { axiosAuth } from '../utils/SessionStorage';
 import { HOST } from '../commons/hosts'; 
 
 
-const SENSOR = `${HOST}/api/sensor`;
+const SENSOR = `${HOST.backend_api}/api/sensor`;
 class SensorServices{
 
     getSensors(){
@@ -23,6 +23,14 @@ class SensorServices{
 
     deleteSensor(id){
         return axiosAuth.post(`${SENSOR}/${id}`);
+    }
+
+    getSensorTemplates(){
+        return axiosAuth.get(`${SENSOR}/templates`)
+    }
+
+    getSensorRecords(id){
+        return axiosAuth.get(`${SENSOR}/${id}/records`)
     }
    
 }

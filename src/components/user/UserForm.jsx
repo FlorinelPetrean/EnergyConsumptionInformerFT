@@ -31,6 +31,7 @@ class UserForm extends Component{
             address: values.address,
             dateOfBirth: values.dateOfBirth
         }
+        console.log(user)
 
         if (this.isCreateForm() === false){
             UserServices.createUser(user)

@@ -2,7 +2,7 @@ import { axiosAuth } from '../utils/SessionStorage';
 import { HOST } from '../commons/hosts'; 
 
 
-const DEVICE = `${HOST}/api/device`;
+const DEVICE = `${HOST.backend_api}/api/device`;
 class DeviceServices{
 
     getDevices(){
@@ -14,6 +14,7 @@ class DeviceServices{
     }
 
     createDevice(device){
+        console.log(device)
         return axiosAuth.post(`${DEVICE}/create`, device);
     }
 
@@ -23,6 +24,10 @@ class DeviceServices{
 
     deleteDevice(id){
         return axiosAuth.post(`${DEVICE}/${id}`);
+    }
+
+    getDeviceTemplates(){
+        return axiosAuth.get(`${DEVICE}/templates`)
     }
    
 }

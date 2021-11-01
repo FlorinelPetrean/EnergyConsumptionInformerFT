@@ -55,7 +55,7 @@ class Table extends Component {
         if (rowInfo) {
             return {
                 style: {
-                    textAlign: "center"
+                    textAlign: "left"
                 }
             };
         }
@@ -87,6 +87,7 @@ class Table extends Component {
                 <Row>
                     <Col>
                         <ReactTable
+                            
                             data={data}
                             resolveData={data => data.map(row => row)}
                             columns={this.state.columns}

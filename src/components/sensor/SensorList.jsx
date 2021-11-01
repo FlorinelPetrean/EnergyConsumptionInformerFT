@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "../../commons/tables/table";
 import SensorServices from "../../services/SensorServices";
+import { Link } from 'react-router-dom';
 
 const columns = [
     {
@@ -24,7 +25,7 @@ const columns = [
 const filters = [
     {
         accessor: 'description',
-    }
+    },
 ];
 
 class SensorList extends React.Component {
@@ -34,7 +35,7 @@ class SensorList extends React.Component {
         this.state = {
             tableData: []
         };
-        this.refreshUsers = this.refreshSensors.bind(this);
+        this.refreshSensors = this.refreshSensors.bind(this);
     }
 
     componentDidMount() {
@@ -52,14 +53,22 @@ class SensorList extends React.Component {
                     })
                 }
             )
-        
+    }
 
+    setHyperlinks(tableData) {
+        tableData.forEach(
+            data => {
+                data.id = <Link to={`/sensors/page/${data.id}`}>{data.id}</Link>;
+                data.description = <Link to={`/sensors/page/${data.id}`}>{data.description}</Link>
+                data.deviceId = <Link to={`/devices/page/${data.deviceId}`}>{data.deviceId}</Link>;
+            }
+        )
+        return tableData
     }
 
     render() {
         if (this.state.tableData.length === 0)
-            return (<div>LOADING...</div>)
-            
+            return(<div>LOADING...</div>)
         return (
             <Table
                 data={this.state.tableData}

@@ -1,4 +1,4 @@
-/*http://colorpalettes.net/color-palette-3958/*/
+http://colorpalettes.net/color-palette-3958/
 
 :local(.body) {
     margin-left: 50px;
@@ -124,7 +124,7 @@
     letter-spacing: 1px;
     position: relative;
 
-    text-align: left;
+    text-align: center;
     margin-left: 50px;
     margin-bottom: 20px;
 }
@@ -236,7 +236,7 @@
 }
 
 :local(.middleAllign) {
-    horiz-align: center;
+    horiz-align: left;
 }
 :local(.container) {
     margin-left: 0;

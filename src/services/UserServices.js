@@ -14,6 +14,10 @@ class UserServices{
         return axiosAuth.get(`${USER}/${id}`);
     }
 
+    getUserByUsername(username){
+        return axiosAuth.get(`${USER}/u/${username}`)
+    }
+
     loginUser(user) {
         return axios.post(`${USER}/login`, user);
     }
@@ -28,6 +32,10 @@ class UserServices{
 
     deleteUser(id){
         return axiosAuth.post(`${USER}/${id}`);
+    }
+
+    getUserDevices(username){
+        return axiosAuth.get(`${USER}/${username}/devices`)
     }
    
 }
