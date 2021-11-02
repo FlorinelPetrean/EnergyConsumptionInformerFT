@@ -59,7 +59,6 @@ class SensorList extends React.Component {
         tableData.forEach(
             data => {
                 data.id = <Link to={`/sensors/page/${data.id}`}>{data.id}</Link>;
-                data.description = <Link to={`/sensors/page/${data.id}`}>{data.description}</Link>
                 data.deviceId = <Link to={`/devices/page/${data.deviceId}`}>{data.deviceId}</Link>;
             }
         )
@@ -68,10 +67,10 @@ class SensorList extends React.Component {
 
     render() {
         if (this.state.tableData.length === 0)
-            return(<div>LOADING...</div>)
+            return(<div></div>)
         return (
             <Table
-                data={this.state.tableData}
+                data={this.setHyperlinks(this.state.tableData)}
                 columns={columns}
                 search={filters}
                 pageSize={5}

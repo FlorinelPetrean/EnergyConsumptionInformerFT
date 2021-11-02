@@ -9,6 +9,8 @@ class DeviceForm extends Component{
  
         this.state = {
             user: props.user,
+            device: props.device,
+            type: props.type,
             templates: [],
             message: null,
         }
@@ -43,25 +45,47 @@ class DeviceForm extends Component{
         }
 
         let device = {
+            id: null,
             username: username,
             address: address,
             description: values.description
         }
-
-        DeviceServices.createDevice(device)
-            .then(
-                this.setState({
-                    message: 'Device has been added'
-                })
-            )
-            .catch(
-                error => {
+        if(this.state.type === "create" || this.state.type === "assign") {
+            DeviceServices.createDevice(device)
+                .then(
                     this.setState({
-                        message: "Device cannot be added"
+                        message: 'Device has been added'
                     })
-                    console.log(error);
-                }
-            )
+                )
+                .catch(
+                    error => {
+                        this.setState({
+                            message: "Device cannot be added"
+                        })
+                        console.log(error);
+                    }
+                )
+        }
+        else {
+            device.id = this.state.device.id;
+            device.address = this.state.device.address;
+            device.username = this.state.device.username;
+            console.log(device)
+            DeviceServices.modifyDevice(device)
+                .then(
+                    this.setState({
+                        message: 'Device has been modified'
+                    })
+                )
+                .catch(
+                    error => {
+                        this.setState({
+                            message: "Device cannot be modifed"
+                        })
+                        console.log(error);
+                    }
+                )
+        }
         
     }
     
@@ -75,7 +99,7 @@ class DeviceForm extends Component{
     }
  
     render() {
-        let user = this.state.user;
+        let {device, user, type} = this.state;
         let deviceTemplates = this.state.templates;
         const templateOptions = [];
         for(let value of deviceTemplates) {
@@ -89,6 +113,11 @@ class DeviceForm extends Component{
             description: ''
         }
         let { description } = emptyDevice
+        if (user != null) {
+            description = deviceTemplates[0];
+        }
+        if (device != null)
+            description = device.description;
         return (
             <div>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
@@ -106,8 +135,8 @@ class DeviceForm extends Component{
                                 <Form>
                                     <fieldset className="form-group">
                                         <label>Description</label>
-                                        {user === null && <Field className="form-control" type="text" name="description" /> }
-                                        {user !== null && <Field as="select" className="form-control" name="description">
+                                        {(type === "create" || type === "modify") && <Field className="form-control" type="text" name="description" />}
+                                        {type === "assign" && <Field as="select" className="form-control" name="description">
                                             {templateOptions}
                                         </Field>}
                                     </fieldset>

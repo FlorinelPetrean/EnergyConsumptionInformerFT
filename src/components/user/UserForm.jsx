@@ -25,15 +25,16 @@ class UserForm extends Component{
     onSubmit(values) {
         let user = {
             username: values.username,
-            password: values.password,
             firstName: values.firstName,
             lastName: values.lastName,
             address: values.address,
-            dateOfBirth: values.dateOfBirth
+            dateOfBirth: values.dateOfBirth,
+            role: values.role
         }
         console.log(user)
 
-        if (this.isCreateForm() === false){
+        if (this.isCreateForm() === true){
+            user.password = values.password
             UserServices.createUser(user)
                 .then(
                     this.setState({
@@ -50,6 +51,7 @@ class UserForm extends Component{
                 )
         }
         else{
+            user.id = this.state.user.id
             UserServices.modifyUser(user)
                 .then(
                     this.setState({
@@ -75,12 +77,14 @@ class UserForm extends Component{
         if (!values.username) {
             errors.name = 'Enter a username'
         }
-        if(values.password !== values.confirmPassword) {
-            errors.password = 'Passwords do not match'
-        }
-        if(!values.password) {
-            errors.password = "Enter password"
-        }
+        if(this.isCreateForm()) {
+            if(values.password !== values.confirmPassword) {
+                errors.password = 'Passwords do not match'
+            }
+            if(!values.password) {
+                errors.password = "Enter password"
+            }
+            }
         if(!values.firstName){
             errors.firstName = "Enter First Name"
         }
@@ -94,6 +98,10 @@ class UserForm extends Component{
         if(!values.dateOfBirth) {
             errors.dateOfBirth = "Enter date of birth"
         }
+
+        if(!values.role) {
+            errors.role = "Enter role"
+        }
         return errors;
     }
  
@@ -105,7 +113,8 @@ class UserForm extends Component{
             firstName: '',
             lastName: '',
             address: '',
-            dateOfBirth: ''
+            dateOfBirth: '',
+            role: ''
         }
         let user = null;
         if (this.state.user == null) 
@@ -115,15 +124,14 @@ class UserForm extends Component{
             user.confirmPassword = null
             user.password = null
         }
-        let { username, password, confirmPassword, firstName, lastName, address, dateOfBirth } = user
+        let { username, password, confirmPassword, firstName, lastName, address, dateOfBirth, role } = user
 
         return (
             <div>
-                <h2>User Form</h2>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
                     <Formik
-                        initialValues={{ username, password, confirmPassword, firstName, lastName, address, dateOfBirth }}
+                        initialValues={{ username, password, confirmPassword, firstName, lastName, address, dateOfBirth, role }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -141,17 +149,17 @@ class UserForm extends Component{
                                   
                                     <fieldset className="form-group">
                                     <label>Username</label>
-                                    {!this.isCreateForm() && (<Field className="form-control" type="text" name="username"/>)}
-                                    {this.isCreateForm() && (<Field className="form-control" type="text" name="username" disabled/>)}
+                                    {this.isCreateForm() && (<Field className="form-control" type="text" name="username"/>)}
+                                    {!this.isCreateForm() && (<Field className="form-control" type="text" name="username" disabled/>)}
                                     </fieldset>
 
-                                    {!this.isCreateForm() &&
+                                    {this.isCreateForm() &&
                                     <fieldset className="form-group">
                                     <label>Password</label>
                                     <Field className="form-control" type="password" name="password"/>
                                     </fieldset>
                                     }
-                                    {!this.isCreateForm() &&
+                                    {this.isCreateForm() &&
                                     <fieldset className="form-group">
                                     <label>Confirm Password</label>
                                     <Field className="form-control" type="password" name="confirmPassword"/>
@@ -177,6 +185,19 @@ class UserForm extends Component{
                                     <fieldset className="form-group">
                                         <label>Date of Birth</label>
                                         <Field className="form-control" type="date" name="dateOfBirth" />
+                                    </fieldset>
+
+                                    <fieldset className="form-group">
+                                    <label>Role</label>
+                                    <Field as="select" className="form-control" name="role">
+                                    <option key={"USER"} value={"USER"}>
+                                        {"USER"}
+                                    </option>
+                                    <option key={"ADMIN"} value={"ADMIN"}>
+                                        {"ADMIN"}
+                                    </option>
+
+                                    </Field>
                                     </fieldset>
 
                                     <button className="btn btn-success" type="submit">Save</button>

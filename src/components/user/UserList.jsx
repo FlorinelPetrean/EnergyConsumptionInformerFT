@@ -24,6 +24,10 @@ const columns = [
     {
         Header: 'Date of Birth',
         accessor: 'dateOfBirth',
+    },
+    {
+        Header: 'Role',
+        accessor: 'role',
     }
 ];
 

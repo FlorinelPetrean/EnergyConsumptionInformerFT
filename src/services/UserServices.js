@@ -27,7 +27,7 @@ class UserServices{
     }
 
     modifyUser(user){
-        return axiosAuth.post(`${USER}/modify`, user);
+        return axiosAuth.put(`${USER}/modify`, user);
     }
 
     deleteUser(id){

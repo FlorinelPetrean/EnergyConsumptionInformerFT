@@ -25,7 +25,7 @@ const columns = [
         accessor: 'avgEnergyConsumption',
     },
     {
-        Header: 'Sensor',
+        Header: 'Sensor Id',
         accessor: 'sensorId',
     }
 ];
@@ -33,7 +33,8 @@ const columns = [
 const filters = [
     {
         accessor: 'description',
-    }
+    },
+
 ];
 
 class DeviceList extends React.Component {
@@ -50,7 +51,6 @@ class DeviceList extends React.Component {
         tableData.forEach(
             data => {
                 data.id = <Link to={`/devices/page/${data.id}`}>{data.id}</Link>;
-                data.description = <Link to={`/devices/page/${data.id}`}>{data.description}</Link>;
                 data.username = <Link to={`/users/page/${data.username}`}>{data.username}</Link>;
                 data.sensorId = <Link to={`/sensors/page/${data.sensorId}`}>{data.sensorId}</Link>;
             }

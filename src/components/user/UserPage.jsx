@@ -28,10 +28,19 @@ class UserPage extends React.Component {
             )
     }
 
+    modifyUserClicked(user) {
+        this.props.history.push("/users/modify", {user: user});
+    }
+
+    deleteUserClicked(userId) {
+        this.props.history.push("/users/list");
+        UserServices.deleteUser(userId);
+    }
+
     render() {
         let user = this.state.user;
         if (user === null)
-            return(<div>LOADING...</div>);
+            return(<div></div>);
         return (
             <div>
                
@@ -41,7 +50,8 @@ class UserPage extends React.Component {
                     <div>Name: {user.firstName + ' ' + user.lastName}</div>
                     <div>Address: {user.address}</div>
                     <div>Date of Birth: {user.dateOfBirth}</div>
-                    <div>Admin: {user.isAdmin}</div>
+                    <div>Role: {user.role}</div>
+                    <button className="btn btn-success" onClick={() => this.modifyUserClicked(user)}>Modify</button>
                 </div>
                 <div>
                     <h2>Assign Device</h2>
@@ -51,6 +61,11 @@ class UserPage extends React.Component {
                 <div>
                     <h2>Device List</h2>
                     <DeviceListUser username={user.username}/>
+                </div>
+
+                <div>
+                    <h2>Delete User</h2>
+                    <button className="btn btn-warning" onClick={() => this.deleteUserClicked(user.id)}>Delete</button>
                 </div>
 
 

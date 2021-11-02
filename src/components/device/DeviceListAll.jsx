@@ -33,7 +33,7 @@ class DeviceListAll extends React.Component {
 
     render() {  
         if(this.state.devices.length === 0)
-            return (<div>LOADING ...</div>)    
+            return (<div>None</div>)    
         return (
             <div>
                 <DeviceList tableData={this.state.devices}/>

@@ -9,6 +9,8 @@ class SensorForm extends Component{
  
         this.state = {
             device: props.device,
+            sensor: props.sensor,
+            type: props.type,
             templates: [],
             message: null,
         }
@@ -38,24 +40,48 @@ class SensorForm extends Component{
         if(this.state.device !== null)
             deviceId = this.state.device.id;
         let sensor = {
+            id: null,
+            maxValue: 0,
             description: values.description,
             deviceId: deviceId
         }
-
-        SensorServices.createSensor(sensor)
-            .then(
-                this.setState({
-                    message: 'Sensor has been added'
-                })
-            )
-            .catch(
-                error => {
+        if (this.state.type === "create" || this.state.type ==="assign") {
+            SensorServices.createSensor(sensor)
+                .then(
                     this.setState({
-                        message: "Sensor cannot be added"
+                        message: 'Sensor has been added'
                     })
-                    console.log(error);
-                }
-            )
+                )
+                .catch(
+                    error => {
+                        this.setState({
+                            message: "Sensor cannot be added"
+                        })
+                        console.log(error);
+                    }
+                )
+        }
+        else{
+            sensor.id = this.state.sensor.id;
+            sensor.maxValue = this.state.sensor.maxValue;
+            sensor.deviceId = this.state.sensor.deviceId;
+            console.log(sensor)
+            SensorServices.modifySensor(sensor)
+                .then(
+                    this.setState({
+                        message: 'Sensor has been modified'
+                    })
+                )
+                .catch(
+                    error => {
+                        this.setState({
+                            message: "Sensor cannot be modified"
+                        })
+                        console.log(error);
+                    }
+                )
+        }
+
         
     }
     
@@ -69,12 +95,14 @@ class SensorForm extends Component{
     }
  
     render() {
-        let device = this.state.device;
+        let {type, device} = this.state;
         let emptySensor = {
             description: ''
         }
         let { description } = emptySensor
-
+        if (this.state.sensor != null)
+            description = this.state.sensor.description
+       
         let sensorTemplates = this.state.templates;
         const templateOptions = [];
         for(let value of sensorTemplates) {
@@ -85,9 +113,12 @@ class SensorForm extends Component{
             );
         }
 
+        if(device != null) {
+            description = sensorTemplates[0];
+        }
+
         return (
             <div>
-                <h2>Sensor Form</h2>
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
                     <Formik
@@ -103,8 +134,8 @@ class SensorForm extends Component{
                                 <Form>
                                     <fieldset className="form-group">
                                         <label>Description</label>
-                                        {device === null && <Field className="form-control" type="text" name="description" />}
-                                        {device !== null && <Field as="select" className="form-control" name="description">
+                                        {(type === "create" || type === "modify") && <Field className="form-control" type="text" name="description" />}
+                                        {type === "assign" && <Field as="select" className="form-control" name="description">
                                             {templateOptions}
                                         </Field>}
                                     </fieldset>
