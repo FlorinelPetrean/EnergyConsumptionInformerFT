@@ -1,8 +1,13 @@
 import React from "react";
 import Table from "../../commons/tables/table";
 import UserServices from "../../services/UserServices";
+import { Link } from 'react-router-dom';
 
 const columns = [
+     {
+        Header: 'Username',
+        accessor: 'username',
+    },
     {
         Header: 'First Name',
         accessor: 'firstName',
@@ -11,10 +16,7 @@ const columns = [
         Header: 'Last Name',
         accessor: 'lastName',
     },
-    {
-        Header: 'Username',
-        accessor: 'username',
-    },
+   
     {
         Header: 'Address',
         accessor: 'address',
@@ -22,12 +24,19 @@ const columns = [
     {
         Header: 'Date of Birth',
         accessor: 'dateOfBirth',
+    },
+    {
+        Header: 'Role',
+        accessor: 'role',
     }
 ];
 
 const filters = [
     {
         accessor: 'username',
+    },
+    {
+        accessor: 'address',
     }
 ];
 
@@ -56,8 +65,16 @@ class UserList extends React.Component {
                     })
                 }
             )
-        
+    
+    }
 
+    setHyperlinks(tableData) {
+        tableData.forEach(
+            data => {
+                data.username = <Link to={`/users/page/${data.username}`}>{data.username}</Link>;
+            }
+        )
+        return tableData
     }
 
     render() {
@@ -66,7 +83,7 @@ class UserList extends React.Component {
 
         return (
             <Table
-                data={this.state.tableData}
+                data={this.setHyperlinks(this.state.tableData)}
                 columns={columns}
                 search={filters}
                 pageSize={5}

@@ -1,16 +1,21 @@
 import React from "react";
 import Table from "../../commons/tables/table";
-import DeviceServices from "../../services/DeviceServices";
+import { Link } from 'react-router-dom';
 
 const columns = [
     {
-        Header: 'Username',
-        accessor: 'username',
+        Header: 'Id',
+        accessor: 'id',
     },
     {
         Header: 'Description',
         accessor: 'description',
     },
+    {
+        Header: 'User',
+        accessor: 'username',
+    },
+    
     {
         Header: 'Max Energy Consumption',
         accessor: 'maxEnergyConsumption',
@@ -20,7 +25,7 @@ const columns = [
         accessor: 'avgEnergyConsumption',
     },
     {
-        Header: 'Sensor',
+        Header: 'Sensor Id',
         accessor: 'sensorId',
     }
 ];
@@ -28,7 +33,8 @@ const columns = [
 const filters = [
     {
         accessor: 'description',
-    }
+    },
+
 ];
 
 class DeviceList extends React.Component {
@@ -36,37 +42,27 @@ class DeviceList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tableData: []
+            tableData: props.tableData
         };
-        this.refreshUsers = this.refreshDevices.bind(this);
     }
 
-    componentDidMount() {
-        this.refreshDevices();
-    }
 
-    refreshDevices() {
-        DeviceServices.getDevices()
-            .then(
-                response => {
-                    console.log(response);
-                    this.setState({ 
-                        tableData: response.data
-                        
-                    })
-                }
-            )
-        
-
+    setHyperlinks(tableData) {
+        tableData.forEach(
+            data => {
+                data.id = <Link to={`/devices/page/${data.id}`}>{data.id}</Link>;
+                data.username = <Link to={`/users/page/${data.username}`}>{data.username}</Link>;
+                data.sensorId = <Link to={`/sensors/page/${data.sensorId}`}>{data.sensorId}</Link>;
+            }
+        )
+        return tableData
     }
 
     render() {
-        if (this.state.tableData.length === 0)
-            return (<div>LOADING...</div>)
             
         return (
             <Table
-                data={this.state.tableData}
+                data={this.setHyperlinks(this.state.tableData)}
                 columns={columns}
                 search={filters}
                 pageSize={5}

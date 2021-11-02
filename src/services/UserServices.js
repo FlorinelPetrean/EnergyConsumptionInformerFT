@@ -14,6 +14,10 @@ class UserServices{
         return axiosAuth.get(`${USER}/${id}`);
     }
 
+    getUserByUsername(username){
+        return axiosAuth.get(`${USER}/u/${username}`)
+    }
+
     loginUser(user) {
         return axios.post(`${USER}/login`, user);
     }
@@ -23,11 +27,15 @@ class UserServices{
     }
 
     modifyUser(user){
-        return axiosAuth.post(`${USER}/modify`, user);
+        return axiosAuth.put(`${USER}/modify`, user);
     }
 
     deleteUser(id){
         return axiosAuth.post(`${USER}/${id}`);
+    }
+
+    getUserDevices(username){
+        return axiosAuth.get(`${USER}/${username}/devices`)
     }
    
 }

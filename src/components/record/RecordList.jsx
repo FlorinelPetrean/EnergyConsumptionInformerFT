@@ -1,7 +1,6 @@
 import React from "react";
 import Table from "../../commons/tables/table";
 import SensorServices from "../../services/SensorServices";
-import { Link } from 'react-router-dom';
 
 const columns = [
     {
@@ -9,41 +8,38 @@ const columns = [
         accessor: 'id',
     },
     {
-        Header: 'Description',
-        accessor: 'description',
+        Header: 'Timestamp',
+        accessor: 'timestamp',
     },
     {
-        Header: 'Maximum Value',
-        accessor: 'maxValue',
-    },
-    {
-        Header: 'Device Id',
-        accessor: 'deviceId'
+        Header: 'Energy Consumption',
+        accessor: 'energyConsumption',
     },
 ];
 
 const filters = [
     {
-        accessor: 'description',
+        accessor: 'timestamp',
     },
 ];
 
-class SensorList extends React.Component {
+class RecordList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            id: props.sensorId,
             tableData: []
         };
-        this.refreshSensors = this.refreshSensors.bind(this);
+        this.refreshSensors = this.refreshRecords.bind(this);
     }
 
     componentDidMount() {
-        this.refreshSensors();
+        this.refreshRecords();
     }
 
-    refreshSensors() {
-        SensorServices.getSensors()
+    refreshRecords() {
+        SensorServices.getSensorRecords(this.state.id)
             .then(
                 response => {
                     console.log(response);
@@ -55,22 +51,13 @@ class SensorList extends React.Component {
             )
     }
 
-    setHyperlinks(tableData) {
-        tableData.forEach(
-            data => {
-                data.id = <Link to={`/sensors/page/${data.id}`}>{data.id}</Link>;
-                data.deviceId = <Link to={`/devices/page/${data.deviceId}`}>{data.deviceId}</Link>;
-            }
-        )
-        return tableData
-    }
 
     render() {
         if (this.state.tableData.length === 0)
-            return(<div></div>)
+            return(<div>None</div>)
         return (
             <Table
-                data={this.setHyperlinks(this.state.tableData)}
+                data={this.state.tableData}
                 columns={columns}
                 search={filters}
                 pageSize={5}
@@ -79,4 +66,4 @@ class SensorList extends React.Component {
     }
 }
 
-export default SensorList;
+export default RecordList;
