@@ -14,8 +14,13 @@ class UserServices{
         return axiosAuth.get(`${USER}/${id}`);
     }
 
+
     getUserByUsername(username){
         return axiosAuth.get(`${USER}/u/${username}`)
+    }
+
+    getTotalEnergy(username) {
+        return axiosAuth.get(`${USER}/${username}/totalEnergy`)
     }
 
     loginUser(user) {

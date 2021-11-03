@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import UserPage from '../components/user/UserPage';
 import {getUser} from '../utils/SessionStorage';
 
 class Dashboard extends Component {
@@ -8,6 +7,15 @@ class Dashboard extends Component {
         this.state = {
             user: getUser()
         }
+        this.redirectUser = this.redirectUser.bind(this);
+    }
+
+    componentDidMount() {
+        this.redirectUser();
+    }
+
+    redirectUser() {
+        this.props.history.push(`/users/page/${this.state.user.username}`);
     }
 
 

@@ -2,6 +2,7 @@ import React from "react";
 import DeviceAssign from "../device/DeviceAssign";
 import UserServices from "../../services/UserServices";
 import DeviceListUser from "../device/DeviceListUser";
+import { isAdmin } from "../../utils/SessionStorage";
 
 class UserPage extends React.Component {
 
@@ -10,20 +11,31 @@ class UserPage extends React.Component {
         this.state = {
             username: props.match.params.username,
             user: null,
+            totalEnergy: 0,
             device: null,
         }
 
     }
 
-    componentDidMount() {
-        this.getUser();
+    async componentDidMount() {
+        await this.getUser();
+        this.getTotalEnergy();
     }
 
-    getUser() {
-        UserServices.getUserByUsername(this.state.username)
+    async getUser() {
+        await UserServices.getUserByUsername(this.state.username)
             .then(
                 response => {
                     this.setState({user : response.data})
+                }
+            )
+    }
+
+    getTotalEnergy() {
+        UserServices.getTotalEnergy(this.state.username)
+            .then(
+                response => {
+                    this.setState({totalEnergy : response.data})
                 }
             )
     }
@@ -38,7 +50,7 @@ class UserPage extends React.Component {
     }
 
     render() {
-        let user = this.state.user;
+        let {totalEnergy, user} = this.state;
         if (user === null)
             return(<div></div>);
         return (
@@ -53,20 +65,26 @@ class UserPage extends React.Component {
                     <div>Role: {user.role}</div>
                     <button className="btn btn-success" onClick={() => this.modifyUserClicked(user)}>Modify</button>
                 </div>
+
+                { isAdmin() &&
                 <div>
                     <h2>Assign Device</h2>
                     <DeviceAssign user={user}/>
                 </div>
+                }
 
                 <div>
                     <h2>Device List</h2>
                     <DeviceListUser username={user.username}/>
+                    <div>Total Energy Consumption: {totalEnergy}</div>
                 </div>
-
+                
+                { isAdmin() &&
                 <div>
                     <h2>Delete User</h2>
                     <button className="btn btn-warning" onClick={() => this.deleteUserClicked(user)}>Delete</button>
                 </div>
+                }
 
 
             </div>

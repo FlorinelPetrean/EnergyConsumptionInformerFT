@@ -1,8 +1,10 @@
 import React from "react";
 import SensorServices from "../../services/SensorServices";
+import { isAdmin } from "../../utils/SessionStorage";
 import RecordChart from "../record/RecordChart";
 import RecordForm from "../record/RecordForm";
 import RecordList from "../record/RecordList";
+import { Link } from 'react-router-dom';
 
 class SensorPage extends React.Component {
 
@@ -48,14 +50,17 @@ class SensorPage extends React.Component {
                     <h2>Sensor Details</h2>
                     <div>Description: {sensor.description}</div>
                     <div>Maximum Value: {sensor.maxValue}</div>
+                    <div>Device Id: {<Link to={`/devices/page/${sensor.deviceId}`}>{sensor.deviceId}</Link>}</div>
                     <button className="btn btn-success" onClick={() => this.modifySensorClicked(sensor)}>Modify</button>
                 </div>
                 
 
+                { isAdmin() &&
                 <div>
                     <h2>Generate Records</h2>
                     <RecordForm sensorId={sensor.id}/>
                 </div>
+                 }
 
                 <div>
                     <h2>Sensor Records</h2>
@@ -67,10 +72,12 @@ class SensorPage extends React.Component {
                     <RecordChart sensorId={sensor.id}/>
                 </div>
 
+                { isAdmin() &&
                 <div>
                     <h2>Delete Sensor</h2>
                     <button className="btn btn-warning" onClick={() => this.deleteSensorClicked(sensor)}>Delete</button>
                 </div>
+                }
 
 
             </div>

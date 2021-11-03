@@ -2,6 +2,8 @@ import React from "react";
 import SensorAssign from "../sensor/SensorAssign";
 import DeviceServices from "../../services/DeviceServices";
 import SensorServices from "../../services/SensorServices";
+import { isAdmin } from "../../utils/SessionStorage";
+import { Link } from 'react-router-dom';
 
 class DevicePage extends React.Component {
 
@@ -66,26 +68,32 @@ class DevicePage extends React.Component {
                 <div>
                     <h2>Device Details</h2>
                     <div>Description: {device.description}</div>
-                    <div>User: {device.username}</div>
+                    <div>User: {<Link to={`/users/page/${device.username}`}>{device.username}</Link>}</div>
                     <div>Address: {device.address}</div>
                     <div>Maximum Energy Consumption: {device.maxEnergyConsumption}</div>
                     <div>Average Energy Consumption: {device.avgEnergyConsumption}</div>
                     <button className="btn btn-success" onClick={() => this.modifyDeviceClicked(device)}>Modify</button>
                 </div>
+
+                { isAdmin() &&
                 <div>
                     <h2>Assign Sensor</h2>
                     <SensorAssign device={device}/>
                 </div>
+                }
 
                 <div>
                     <h2>Sensor</h2>
+                    {sensor === null && <div>None</div>}
                     {sensor !==null && <button className="btn btn-success" onClick={() => this.sensorPageClicked(sensor.id)}>Details</button>}
                 </div>
-
+                
+                { isAdmin() &&
                 <div>
                     <h2>Delete Device</h2>
                     <button className="btn btn-warning" onClick={() => this.deleteDeviceClicked(device)}>Delete</button>
                 </div>
+                }
 
 
             </div>

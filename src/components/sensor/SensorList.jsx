@@ -59,7 +59,13 @@ class SensorList extends React.Component {
         tableData.forEach(
             data => {
                 data.id = <Link to={`/sensors/page/${data.id}`}>{data.id}</Link>;
-                data.deviceId = <Link to={`/devices/page/${data.deviceId}`}>{data.deviceId}</Link>;
+
+                if(data.deviceId !== null)
+                    data.deviceId = <Link to={`/devices/page/${data.deviceId}`}>{data.deviceId}</Link>;
+                else {
+                    data.deviceId = "TEMPLATE"
+                    data.maxValue = "TEMPLATE"
+                }
             }
         )
         return tableData

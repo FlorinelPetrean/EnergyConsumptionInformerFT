@@ -190,12 +190,12 @@ class UserForm extends Component{
                                     <fieldset className="form-group">
                                     <label>Role</label>
                                     <Field as="select" className="form-control" name="role">
-                                    <option key={"USER"} value={"USER"}>
-                                        {"USER"}
-                                    </option>
-                                    <option key={"ADMIN"} value={"ADMIN"}>
-                                        {"ADMIN"}
-                                    </option>
+                                        <option key={"USER"} value={"USER"}>
+                                            {"USER"}
+                                        </option>
+                                        <option key={"ADMIN"} value={"ADMIN"}>
+                                            {"ADMIN"}
+                                        </option>
 
                                     </Field>
                                     </fieldset>

@@ -4,6 +4,7 @@ import UserList from './components/user/UserList';
 import DeviceListAll from './components/device/DeviceListAll';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
+import PrivateAdminRoute from './utils/PrivateAdminRoute';
 import LoginPage from './pages/LoginPage';
 import LogoutPage from './pages/LogoutPage';
 import HomePage from './pages/HomePage';
@@ -35,19 +36,19 @@ class App extends React.Component {
               <PrivateRoute restricted={false} exact path="/" component={HomePage} />
 
               <PrivateRoute path="/devices/page/:id"  exact component={DevicePage}/>
-              <PrivateRoute path="/devices/form"  exact component={DeviceCreate}/>
-              <PrivateRoute path="/devices/modify"  exact component={DeviceModify}/>
-              <PrivateRoute path="/devices/list"  exact component={DeviceListAll}/>
+              <PrivateAdminRoute path="/devices/form"  exact component={DeviceCreate}/>
+              <PrivateAdminRoute path="/devices/modify"  exact component={DeviceModify}/>
+              <PrivateAdminRoute path="/devices/list"  exact component={DeviceListAll}/>
 
               <PrivateRoute path="/sensors/page/:id"  exact component={SensorPage}/>
-              <PrivateRoute path="/sensors/form" exact component={SensorCreate}/>
-              <PrivateRoute path="/sensors/modify" exact component={SensorModify}/>
-              <PrivateRoute path="/sensors/list" exact component={SensorList}/>
+              <PrivateAdminRoute path="/sensors/form" exact component={SensorCreate}/>
+              <PrivateAdminRoute path="/sensors/modify" exact component={SensorModify}/>
+              <PrivateAdminRoute path="/sensors/list" exact component={SensorList}/>
 
               <PrivateRoute path="/users/page/:username" exact component={UserPage}/>
-              <PrivateRoute path="/users/form" exact component={UserCreate}/>
-              <PrivateRoute path="/users/modify" exact component={UserModify}/>
-              <PrivateRoute path="/users/list" exact component={UserList}/>
+              <PrivateAdminRoute path="/users/form" exact component={UserCreate}/>
+              <PrivateAdminRoute path="/users/modify" exact component={UserModify}/>
+              <PrivateAdminRoute path="/users/list" exact component={UserList}/>
              
               <PrivateRoute path="/dashboard" exact component={Dashboard} />
             </Layout>

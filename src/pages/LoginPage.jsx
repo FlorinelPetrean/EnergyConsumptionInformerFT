@@ -35,7 +35,8 @@ class LoginPage extends Component {
         
         let user = {
             username: values.username,
-            password: values.password
+            password: values.password,
+            role: ''
         }
         console.log(user)
         UserServices.loginUser(user)
@@ -46,10 +47,12 @@ class LoginPage extends Component {
                         password: user.password,
                         message: "Login succeded"
                     })
+                    user.role = response.data.role;
+                    console.log(user)
                     let token = "Bearer " + response.data.token
                     console.log(token)
                     setUserSession(token, user)
-                    this.props.history.push('/dashboard')
+                    this.props.history.push('/')
                 }
             )
             .catch(
