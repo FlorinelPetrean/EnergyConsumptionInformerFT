@@ -51,8 +51,16 @@ class DeviceList extends React.Component {
         tableData.forEach(
             data => {
                 data.id = <Link to={`/devices/page/${data.id}`}>{data.id}</Link>;
-                data.username = <Link to={`/users/page/${data.username}`}>{data.username}</Link>;
                 data.sensorId = <Link to={`/sensors/page/${data.sensorId}`}>{data.sensorId}</Link>;
+                if(data.username !== null)
+                    data.username = <Link to={`/users/page/${data.username}`}>{data.username}</Link>;
+                else {
+                    data.username = "TEMPLATE"
+                    data.sensorId = "TEMPLATE"
+                    data.maxEnergyConsumption = "TEMPLATE"
+                    data.avgEnergyConsumption = "TEMPLATE"
+                }
+
             }
         )
         return tableData

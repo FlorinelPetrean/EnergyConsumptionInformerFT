@@ -22,8 +22,12 @@ class DeviceServices{
         return axiosAuth.put(`${DEVICE}/modify`, device);
     }
 
-    deleteDevice(id){
-        return axiosAuth.post(`${DEVICE}/${id}`);
+    deleteDevice(device){
+        return axiosAuth.delete(`${DEVICE}/delete`, device);
+    }
+
+    deleteDeviceById(id){
+        return axiosAuth.delete(`${DEVICE}/${id}`);
     }
 
     getDeviceTemplates(){

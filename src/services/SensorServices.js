@@ -21,8 +21,12 @@ class SensorServices{
         return axiosAuth.put(`${SENSOR}/modify`, sensor);
     }
 
-    deleteSensor(id){
-        return axiosAuth.post(`${SENSOR}/${id}`);
+    deleteSensor(sensor){
+        return axiosAuth.delete(`${SENSOR}/delete`, sensor);
+    }
+
+    deleteSensorById(id){
+        return axiosAuth.delete(`${SENSOR}/${id}`);
     }
 
     getSensorTemplates(){

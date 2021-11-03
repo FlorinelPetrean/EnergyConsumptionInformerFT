@@ -9,6 +9,14 @@ class HomePage extends Component {
         }
     }
 
+    componentDidMount() {
+        this.redirectUser();
+    }
+
+    redirectUser() {
+        this.props.history.push(`/users/page/${this.state.user.username}`);
+    }
+
 
     render() {
         let user = this.state.user;
