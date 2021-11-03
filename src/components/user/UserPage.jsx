@@ -32,9 +32,9 @@ class UserPage extends React.Component {
         this.props.history.push("/users/modify", {user: user});
     }
 
-    deleteUserClicked(userId) {
+    deleteUserClicked(user) {
         this.props.history.push("/users/list");
-        UserServices.deleteUser(userId);
+        UserServices.deleteUserById(user.id);
     }
 
     render() {
@@ -65,7 +65,7 @@ class UserPage extends React.Component {
 
                 <div>
                     <h2>Delete User</h2>
-                    <button className="btn btn-warning" onClick={() => this.deleteUserClicked(user.id)}>Delete</button>
+                    <button className="btn btn-warning" onClick={() => this.deleteUserClicked(user)}>Delete</button>
                 </div>
 
 

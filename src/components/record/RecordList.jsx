@@ -29,7 +29,8 @@ class RecordList extends React.Component {
         super(props);
         this.state = {
             id: props.sensorId,
-            tableData: []
+            tableData: [],
+            chartData: []
         };
         this.refreshSensors = this.refreshRecords.bind(this);
     }
@@ -56,12 +57,14 @@ class RecordList extends React.Component {
         if (this.state.tableData.length === 0)
             return(<div>None</div>)
         return (
+            <div>
             <Table
                 data={this.state.tableData}
                 columns={columns}
                 search={filters}
                 pageSize={5}
             />
+        </div>
         )
     }
 }

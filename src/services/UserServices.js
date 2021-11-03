@@ -30,8 +30,12 @@ class UserServices{
         return axiosAuth.put(`${USER}/modify`, user);
     }
 
-    deleteUser(id){
-        return axiosAuth.post(`${USER}/${id}`);
+    deleteUser(user){
+        return axiosAuth.delete(`${USER}/delete`, user);
+    }
+
+    deleteUserById(id){
+        return axiosAuth.delete(`${USER}/${id}`);
     }
 
     getUserDevices(username){

@@ -9,6 +9,10 @@ class DeviceServices{
         return axiosAuth.get(`${RECORD}/all`);
     }
 
+    getSensorRecordsByDay(sensorId, date) {
+        return axiosAuth.get(`${RECORD}/list/${sensorId}/${date}`);
+    }
+
     getRecord(id){
         return axiosAuth.get(`${RECORD}/${id}`);
     }
@@ -22,8 +26,13 @@ class DeviceServices{
         return axiosAuth.put(`${RECORD}/modify`, record);
     }
 
-    deleteRecord(id){
-        return axiosAuth.post(`${RECORD}/${id}`);
+    deleteRecord(record){
+        return axiosAuth.delete(`${RECORD}/delete`, record);
     }
+
+    deleteRecordBy(id){
+        return axiosAuth.delete(`${RECORD}/${id}`);
+    }
+
 }
 export default new DeviceServices();

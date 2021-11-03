@@ -50,6 +50,11 @@ class DevicePage extends React.Component {
         this.props.history.push("/devices/modify", {device: device});
     }
 
+    deleteDeviceClicked(device) {
+        this.props.history.push("/devices/list");
+        DeviceServices.deleteDeviceById(device.id);
+    }
+
     render() {
         let {device} = this.state;
         if (device === null)
@@ -75,6 +80,11 @@ class DevicePage extends React.Component {
                 <div>
                     <h2>Sensor</h2>
                     {sensor !==null && <button className="btn btn-success" onClick={() => this.sensorPageClicked(sensor.id)}>Details</button>}
+                </div>
+
+                <div>
+                    <h2>Delete Device</h2>
+                    <button className="btn btn-warning" onClick={() => this.deleteDeviceClicked(device)}>Delete</button>
                 </div>
 
 
