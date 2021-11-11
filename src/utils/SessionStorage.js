@@ -34,7 +34,7 @@ export const isAuthenticated = () => {
 
 export const isAdmin = () => {
   let user = getUser();
-  if(user.role === "ADMIN")
+  if(user != null && user.role === "ADMIN")
     return true;
   return false;
 }

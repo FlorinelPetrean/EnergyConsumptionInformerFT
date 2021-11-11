@@ -19,7 +19,7 @@ class DeviceServices{
     }
 
     modifyDevice(device){
-        return axiosAuth.put(`${DEVICE}/modify`, device);
+        return axiosAuth.put(`${DEVICE}/modify/${device.id}`, device);
     }
 
     deleteDevice(device){

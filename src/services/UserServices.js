@@ -32,7 +32,7 @@ class UserServices{
     }
 
     modifyUser(user){
-        return axiosAuth.put(`${USER}/modify`, user);
+        return axiosAuth.put(`${USER}/modify/${user.id}`, user);
     }
 
     deleteUser(user){

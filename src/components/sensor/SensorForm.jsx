@@ -68,7 +68,7 @@ class SensorForm extends Component{
             console.log(sensor)
             SensorServices.modifySensor(sensor)
                 .then(
-                    this.setState({
+                    this.setState({ 
                         message: 'Sensor has been modified'
                     })
                 )
