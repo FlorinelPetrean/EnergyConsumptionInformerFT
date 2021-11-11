@@ -35,15 +35,6 @@ class RecordChart extends React.Component {
     }
 
 
-    modifyData(data) {
-        data.forEach(
-            record => {
-                record.timestamp = new Date(record.timestamp)
-            }
-        )
-        return data;
-    }
-
     onSubmit(values) {
         let day = values.date;
         this.setState({
@@ -111,7 +102,7 @@ class RecordChart extends React.Component {
                     </div>
 
                 <h2>Chart</h2>
-                <SimpleChart data={this.modifyData(this.state.chartData)}/>
+                <SimpleChart data={this.state.chartData}/>
             </div>
         )
     }

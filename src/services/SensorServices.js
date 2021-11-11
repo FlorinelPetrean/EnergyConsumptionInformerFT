@@ -18,7 +18,7 @@ class SensorServices{
     }
 
     modifySensor(sensor){
-        return axiosAuth.put(`${SENSOR}/modify`, sensor);
+        return axiosAuth.put(`${SENSOR}/modify/${sensor.id}`, sensor);
     }
 
     deleteSensor(sensor){
