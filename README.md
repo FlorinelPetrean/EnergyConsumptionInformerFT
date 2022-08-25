@@ -1,4 +1,4 @@
-#Energy Consumption Informer
+# Energy Consumption Informer
 
 This is the frontend part of the Energy Consumption Informer.
 
